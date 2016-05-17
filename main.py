@@ -112,7 +112,7 @@ def add():
                          data['items'][0]['volumeInfo']['authors'][0].decode(),
                          data['items'][0]['volumeInfo']['pageCount'],
                          data['items'][0]['volumeInfo']['averageRating'],
-                         data['items'][0]['volumeInfo']\
+                         data['items'][0]['voelumeInfo']\
                          ['imageLinks']['smallThumbnail'],
                          session['username']])
             g.db.commit()
@@ -127,13 +127,13 @@ def add():
         return redirect(url_for('current_books'))
     return render_template('add.html')
 
-@app.route('/book/delete/<isbn>', methods=['GET']) #deletion of books
+@app.route('/book/delete/<isbn>', methods=['GET','POST']) #deletion of books
 def delete(isbn):
     if request.method == 'POST':
         if not session.get('logged_in'):
             abort(401)
-        g.db.execute('delete from Books where ISBN = ?', isbn)
-        g.db.commit()
+    g.db.execute.delete(isbn)
+    g.db.commit()
     return redirect(url_for('current_books'))
     
 if __name__ == '__main__':

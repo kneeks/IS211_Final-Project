@@ -9,7 +9,7 @@
   Pages: {{ book.pages }}<br>
   Average User Rating: {{ book.rev }}<br><br>
   <img src={{ book.thumb }}>
-  <form action="/book/delete/{{ book.isbn }}" method="post"><br>
+  <form action="/book/delete" method="post"><br>
   <input type="submit" value=Delete>
   </form>
   {% endfor %}
