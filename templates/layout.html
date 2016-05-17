@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<center>
+<title>Book Inventory</title>
+<div class=page>
+  <h1>Books Inventory</h1>
+  <div class=metanav>
+  {% if not session.logged_in %}
+    <a href="{{ url_for('login') }}">Login In</a><br><br>
+    <a href="{{ url_for('register') }}">New User</a>
+    
+  {% else %}
+    <a href="{{ url_for('logout') }}">Log Out</a>
+  {% endif %}
+  </div>
+  <br>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %}
+  {% endblock %}
+</div>
+</html>
+</center>
