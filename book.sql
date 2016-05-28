@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Books (ID INTEGER PRIMARY KEY,
 									Title TEXT,
 									Author TEXT,
 									Pages INT,
-									avgReview float,
+									averageRating FLOAT,
 									Thumb TEXT,
 									userID INT);
 									

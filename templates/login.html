@@ -6,6 +6,7 @@
   <h2>Login</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{error}}{% endif %}
   <form action="{{ url_for('login') }}" method=post>
+    <p>Please register for a new account if you do not have a username.</p><br>
     <p>
       Username:
       <input type=text name=username>
@@ -15,5 +16,5 @@
     </p>
   </form>
 {% endblock %}
-</html>
 </center>
+</html>

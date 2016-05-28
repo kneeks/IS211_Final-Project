@@ -3,18 +3,19 @@
 {% extends "layout.html" %}
 {% block body %}
   <h2>Books</h2>
-  <ul class="books">
+  <ul style="padding:0"class="books">
   {% for book in books %}
   Title: "{{ book.title }}" by {{ book.author }}<br>
   Pages: {{ book.pages }}<br>
-  Average User Rating: {{ book.rev }}<br><br>
+  Average User Rating: {{ book.rat }}<br><br>
   <img src={{ book.thumb }}>
-  <form action="/book/delete" method="post"><br>
+  <form action="/book/delete/{{ book.isbn }}" method="post"><br>
   <input type="submit" value=Delete>
   </form>
   {% endfor %}
   </ul>
   <a href="{{url_for('add')}}">Add New Book</a>
 {% endblock %}
-</html>
 </center>
+</html>
+

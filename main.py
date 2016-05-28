@@ -42,7 +42,7 @@ def index():
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET','POST']) #login page
-def login():
+def login(): 
     error = None
     if request.method == 'POST':
         cur1 = g.db.execute('select loginname,loginpw from Users where loginname=?',
@@ -84,14 +84,14 @@ def register():
 @app.route('/dashboard') #dashboards which show current books
 def current_books():
     cur1 = g.db.execute('select ISBN, Title, Author, Pages, '\
-                        'avgReview,Thumb,userID from Books b '\
+                        'averageRating, Thumb,userID from Books b '\
                         'inner join Users u on b.userID = u.ID '\
                         'where u.loginname=?',[session['username'].decode()])
     books = [dict(isbn=row[0],
                   title=row[1],
                   author=row[2],
                   pages=row[3],
-                  rev=row[4],
+                  rat=row[4],
                   thumb=row[5]) for row in cur1.fetchall()]
     return render_template('current_books.html', books=books)
 
@@ -104,15 +104,15 @@ def add():
         data = json.loads(response.read())
         successful = False
         try:
-            g.db.execute('insert into Books (ISBN,Title,Author,Pages,'\
-                         'avgReview,Thumb,userID) '\
+            g.db.execute('insert into Books (ISBN, Title, Author, Pages,'\
+                         'averageRating, Thumb,userID) '\
                          'values (?,?,?,?,?,?,(select ID from Users where loginname=?))',
                          [request.form['isbn'],
                          data['items'][0]['volumeInfo']['title'].decode(),
                          data['items'][0]['volumeInfo']['authors'][0].decode(),
                          data['items'][0]['volumeInfo']['pageCount'],
                          data['items'][0]['volumeInfo']['averageRating'],
-                         data['items'][0]['voelumeInfo']\
+                         data['items'][0]['volumeInfo']\
                          ['imageLinks']['smallThumbnail'],
                          session['username']])
             g.db.commit()
@@ -132,7 +132,7 @@ def delete(isbn):
     if request.method == 'POST':
         if not session.get('logged_in'):
             abort(401)
-    g.db.execute.delete(isbn)
+    g.db.execute('delete from Books where ISBN = ?', [isbn])
     g.db.commit()
     return redirect(url_for('current_books'))
     
